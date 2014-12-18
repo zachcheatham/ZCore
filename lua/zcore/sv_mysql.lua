@@ -50,6 +50,7 @@ end
 connect() 
 
 function ZCore.MySQL.query(sql, callback)
+	print (sql)
 	if not connected then
 		ServerLog("[ZCore] Caching query while MySQL is down...\n")
 		table.insert(queryCache, {sql, callback})
@@ -57,7 +58,7 @@ function ZCore.MySQL.query(sql, callback)
 		local q = database:query(sql)
 		function q:onSuccess(data)
 			if callback then
-				callback(data)
+				callback(ZCore.MySQL.cleanSQLArray(data))
 			end
 		end
 		
@@ -74,6 +75,55 @@ function ZCore.MySQL.query(sql, callback)
 	end
 end
 
+function ZCore.MySQL.queryRow(sql, callback)
+	ZCore.MySQL.query(sql, function(data)
+		if table.Count(data) > 0 then
+			callback(ZCore.MySQL.cleanSQLRow(data[1]))
+		else
+			callback(false)
+		end
+	end)
+end
+
 function ZCore.MySQL.escapeStr(str)
 	return database:escape(tostring(str))
+end
+
+function ZCore.MySQL.cleanSQLArray(data)
+	if not type(data) == "table" then return data end
+	
+	local newData = {}
+	
+	for k, v in pairs(data) do
+		newData[k] = ZCore.MySQL.cleanSQLRow(v)
+	end
+	
+	return newData
+end
+
+function ZCore.MySQL.cleanSQLRow(data)
+	if not data then return data end
+
+	local newData = table.Copy(data)
+	
+	-- REMOVE NULLS
+	local toRemove = {}
+	for k,v in pairs(newData) do
+		if v == "NULL" then
+			table.insert(toRemove, k)
+		end
+	end
+	
+	for _,k in ipairs(toRemove) do
+		newData[k] = nil
+	end
+	
+	-- TURN NUMBERS INTO NUMBERS!
+	for k,v in pairs(newData) do
+		if tonumber(v) ~= nil then
+			newData[k] = tonumber(v)
+		end
+	end
+	
+	return newData
 end

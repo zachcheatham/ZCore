@@ -14,3 +14,18 @@ function ZCore.Util.getServerIP()
 	
 	return (ipaddress .. ":" .. hostport)
 end
+
+function ZCore.Util.removePortFromIP(address)
+	local i = string.find(address, ":")
+	if not i then return address end
+	return string.sub(address, 1, i-1)
+end
+
+function ZCore.Util.sendZachAnError(text)
+	for _, ply in ipairs(player.GetAll()) do
+		if ply:SteamID() == "STEAM_0:0:31424517" then
+			ply:PrintMessage(HUD_PRINTTALK, "[ZCore Error] " .. text)
+			break
+		end
+	end
+end
