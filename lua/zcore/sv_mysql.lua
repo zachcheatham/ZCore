@@ -50,7 +50,6 @@ end
 connect() 
 
 function ZCore.MySQL.query(sql, callback)
-	print (sql)
 	if not connected then
 		ServerLog("[ZCore] Caching query while MySQL is down...\n")
 		table.insert(queryCache, {sql, callback})
