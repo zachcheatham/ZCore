@@ -57,7 +57,7 @@ function ZCore.MySQL.query(sql, callback)
 		local q = database:query(sql)
 		function q:onSuccess(data)
 			if callback then
-				callback(ZCore.MySQL.cleanSQLArray(data))
+				callback(ZCore.MySQL.cleanSQLArray(data), q:lastInsert())
 			end
 		end
 		
