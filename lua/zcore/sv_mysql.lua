@@ -36,6 +36,7 @@ local function connect()
 			if (database and database:status() == mysqloo.DATABASE_NOT_CONNECTED) then
 				connected = false
 				ErrorNoHalt("[ZCore] Lost connection to MySQL! Attempting reconnect...\n")
+				ZCore.Util.sendZachAnError("Connection to MySQL has been lost.")
 				hook.Call("ZCore_MySQL_Disconnected")
 				connect()
 			end
@@ -66,7 +67,9 @@ function ZCore.MySQL.query(sql, callback)
 				ServerLog("[ZCore] Caching query while MySQL is down...\n")
 				table.insert(queryCache, {sql, callback})
 			else
-				ErrorNoHalt("Query failed: " .. err .. ". Query:\n" ..  sql .. "\n")
+				local errStr = "Query failed: " .. err .. ". Query:\n" ..  sql
+				ZCore.Util.sendZachAnError(errStr)
+				ErrorNoHalt(errStr .. "\n")
 			end
 		end
 		
