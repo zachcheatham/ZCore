@@ -29,3 +29,13 @@ function ZCore.Util.sendZachAnError(text)
 		end
 	end
 end
+
+function ZCore.Util.getOnlinePlayer(steamID)
+	for _, ply in ipairs(player.GetAll()) do
+		if ply:SteamID() == steamID then
+			return ply
+		end
+	end
+	
+	return false
+end

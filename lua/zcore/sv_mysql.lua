@@ -42,7 +42,7 @@ local function connect()
 			end
 		end)
 		
-		hook.Call("ZCore_MySQL_Connected", nil, not previouslyConnected)
+		hook.Call("ZCore_MySQL_Connected", _, not previouslyConnected)
 		previouslyConnected = true
 	end
 	
