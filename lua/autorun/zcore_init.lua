@@ -10,3 +10,5 @@ if SERVER then
 end
 
 include ("zcore/sh_permissions.lua")
+
+hook.Call("ZCore_PostInit")
