@@ -1,9 +1,5 @@
-ZCore.Config = {}
-
--- MySQL Settings --
-ZCore.Config.SQL = {}
-ZCore.Config.SQL.hostname 	= ""
-ZCore.Config.SQL.username	= ""
-ZCore.Config.SQL.password	= ""
-ZCore.Config.SQL.database	= ""
-ZCore.Config.SQL.port		= 3306
+CreateConVar("sv_zcore_mysql_hostname", "", 0, "ZCore MySQL Hostname")
+//CreateConVar("sv_zcore_mysql_port", "3306", FCVAR_NEVER_AS_STRING, "ZCore MySQL Port")
+CreateConVar("sv_zcore_mysql_database", "", 0, "ZCore MySQL Database")
+CreateConVar("sv_zcore_mysql_username", "", FCVAR_PROTECTED, "ZCore MySQL Username")
+CreateConVar("sv_zcore_mysql_password", "", FCVAR_PROTECTED, "ZCore MySQL Password")
