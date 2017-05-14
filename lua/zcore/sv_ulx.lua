@@ -1,9 +1,5 @@
 ZCore.ULX = {}
 
---[[
-	DEPRECATED
-	USE ZCore.Perms.hasPerm instead!
-]]--
 function ZCore.ULX.getPlayersWithPermission(permission)
 	local players = {}
 	for _, ply in ipairs(player.GetAll()) do
