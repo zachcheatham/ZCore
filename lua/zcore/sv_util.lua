@@ -20,13 +20,3 @@ function ZCore.Util.removePortFromIP(address)
 	if not i then return address end
 	return string.sub(address, 1, i-1)
 end
-
-function ZCore.Util.getOnlinePlayer(steamID)
-	for _, ply in ipairs(player.GetAll()) do
-		if ply:SteamID() == steamID then
-			return ply
-		end
-	end
-
-	return false
-end
