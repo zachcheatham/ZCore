@@ -10,6 +10,20 @@ function ZCore.ULX.getPlayersWithPermission(permission)
 	return players
 end
 
+function ZCore.ULX.filterPlayersWithPermission(plys, permission)
+    local playersWithPermission = {}
+    local playersWithoutPermission = {}
+    for _, ply in ipairs(plys) do
+        if ply:query(permission) then
+            table.insert(playersWithPermission, ply)
+        else
+            table.insert(playersWithoutPermission, ply)
+        end
+    end
+
+    return playersWithPermission, playersWithoutPermission
+end
+
 function ZCore.ULX.tsayPlayersWithPermission(message, permission)
 	for _, ply in ipairs(ZCore.ULX.getPlayersWithPermission(permission)) do
 		ULib.tsay(ply, message)
